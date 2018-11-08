@@ -4,7 +4,7 @@
 
     <div class="row">
         @forelse($newslist as $news)
-            <div class="jumbotron">
+            <div class="jumbotron mx-4">
                 <h2>
                     <a href="{{ route('app.news.show', $news->getKey()) }}">
                         {{ $news->title }}
@@ -33,24 +33,13 @@
 
             </div>
 
-            <div class="col">
-
-                @auth
-                    <a href="{{ route('app.news.create') }}"
-                       class="btn btn-primary">
-                        Добавить новость
-                    </a>
-
-                    <a href="{{ route('app.tags.create') }}"
-                       class="ml-3 btn btn-secondary">
-                        Добавить тег
-                    </a>
-                @endauth
-            </div>
         @empty
             <div class="col">
                 <p>Новости пока не добавлены.</p>
-                @auth
+            </div>
+        @endforelse
+            @auth
+                <div class="col">
                     <a href="{{ route('app.news.create') }}"
                        class="btn btn-primary">
                         Добавить новость
@@ -60,9 +49,9 @@
                        class="ml-3 btn btn-secondary">
                         Добавить тег
                     </a>
-                @endauth
-            </div>
-        @endforelse
+                </div>
+
+            @endauth
     </div>
 
 @endsection

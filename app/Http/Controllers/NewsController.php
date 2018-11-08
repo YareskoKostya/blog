@@ -74,7 +74,7 @@ class NewsController extends Controller
         ]);
 
         $news->fill(request()->all());
-        $news->tags()->updateExistingPivot('tag_id', request('tags'));
+        $news->tags()->sync(request('tags'));
         $news->save();
         return redirect(route('app.news.index'));
     }
@@ -83,6 +83,6 @@ class NewsController extends Controller
     {
         $news->delete();
         $news->tags()->detach(request('tags'));
-        return redirect(route('app.news.index'));
+        return redirect()->route('app.news.index');
     }
 }
