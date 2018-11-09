@@ -25,4 +25,17 @@
             @endforeach
         </p>
     @endif
+
+    <div class="row mt-5">
+        <a href="{{ route('app.news.edit', $news->getKey()) }}" class="btn btn-primary mx-4">
+            Edit
+        </a>
+        <form action="{{ route('app.news.destroy', $news->getKey()) }}" method="post">
+            @csrf
+            @method('delete')
+            <button onclick="return confirm('Are you sure?')" class=" btn btn-danger">
+                Delete
+            </button>
+        </form>
+    </div>
 @endsection

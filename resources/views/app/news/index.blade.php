@@ -4,7 +4,7 @@
 
     <div class="row">
         @forelse($newslist as $news)
-            <div class="jumbotron mx-4">
+            <div class="jumbotron mr-4">
                 <h2>
                     <a href="{{ route('app.news.show', $news->getKey()) }}">
                         {{ $news->title }}
@@ -18,19 +18,6 @@
                 @endif
 
                 <p class="mb-0 my-4">{{ $news->created_at->diffForHumans() }}</p>
-
-                <div class="row">
-                    <a href="{{ route('app.news.edit', $news->getKey()) }}" class="btn btn-primary mx-4">
-                        Edit
-                    </a>
-                    <form action="{{ route('app.news.destroy', $news->getKey()) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button onclick="return confirm('Are you sure?')" class=" btn btn-danger">
-                            Delete
-                        </button>
-                    </form>
-                </div>
 
             </div>
 

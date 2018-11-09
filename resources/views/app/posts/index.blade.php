@@ -3,16 +3,16 @@
 @section('content')
 
     <div class="row">
-        @forelse($newslist as $news)
+        @forelse($posts as $post)
 
         @empty
             <div class="col">
-                <p>Новости пока не добавлены.</p>
+                <p>Постов пока нет.</p>
                 @auth
                     @if (\App\Models\Category::count())
-                        <a href="{{ route('app.news.create') }}"
+                        <a href="{{ route('app.posts.create') }}"
                            class="btn btn-primary">
-                            Добавить новость
+                            Добавить пост
                         </a>
                     @else
                         Для начала Вам нужно
