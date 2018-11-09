@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -48,7 +50,7 @@ class PostsController extends Controller
 
         $post->tags()->attach(request('tags'));
 
-        return redirect()->route('app.news.show', $post);
+        return redirect()->route('app.posts.show', $post);
     }
 
     public function show(Post $post)
