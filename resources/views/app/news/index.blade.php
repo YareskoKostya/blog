@@ -24,8 +24,9 @@
                         Edit
                     </a>
                     <form action="{{ route('app.news.destroy', $news->getKey()) }}" method="post">
+                        @csrf
                         @method('delete')
-                        <button onclick="return confirm('Are you sure?')" class="btn-danger">
+                        <button onclick="return confirm('Are you sure?')" class=" btn btn-danger">
                             Delete
                         </button>
                     </form>
@@ -38,20 +39,22 @@
                 <p>Новости пока не добавлены.</p>
             </div>
         @endforelse
-            @auth
-                <div class="col">
-                    <a href="{{ route('app.news.create') }}"
-                       class="btn btn-primary">
-                        Добавить новость
-                    </a>
 
-                    <a href="{{ route('app.tags.create') }}"
-                       class="ml-3 btn btn-secondary">
-                        Добавить тег
-                    </a>
-                </div>
-
-            @endauth
     </div>
+
+    @auth
+        <div class="col">
+            <a href="{{ route('app.news.create') }}"
+               class="btn btn-primary">
+                Добавить новость
+            </a>
+
+            <a href="{{ route('app.tags.create') }}"
+               class="ml-3 btn btn-secondary">
+                Добавить тег
+            </a>
+        </div>
+
+    @endauth
 
 @endsection

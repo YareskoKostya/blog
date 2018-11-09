@@ -28,4 +28,17 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::saving(function ($model) {
+            $model->user_id = auth()->user()->getKey();
+        });
+
+        self::addGlobalScope('ordered', function ($builder) {
+            $builder->latest('updated_at');
+        });
+    }
 }
