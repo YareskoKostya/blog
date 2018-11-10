@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NewsResource;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -19,14 +21,18 @@ class NewsController extends Controller
     {
         $newslist = News::query();
 
-        if (request()->has('tag')) {
+        if (request()->filled('tag')) {
             $newslist = $newslist->whereHas('tags', function ($q) {
                 $q->where('tag_id', request('tag'));
             });
         }
 
+        if (request()->filled('author')) {
+            $newslist = $newslist->where('user_id', request()->author);
+        }
+
         return view('app.news.index', [
-            'newslist' => $newslist->paginate(10),
+            'newslist' => $newslist->paginate(3),
         ]);
     }
 
@@ -81,8 +87,31 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
-        $news->delete();
+        $this->checkUser($news);
         $news->tags()->detach(request('tags'));
+        $news->delete();
         return redirect()->route('app.news.index');
+    }
+
+    public function addComment(Request $request, News $news)
+    {
+        $validated = $request->validate([
+            'message' => 'required|min:5',
+            'user_id' => 'required'
+        ]);
+
+        $comment = $news->comments()->create($validated);
+
+        if (auth()->user()->id === $request->user_id) {
+            $comment->update(['approved' => 1]);
+        }
+
+        return back();
+    }
+
+    private function checkUser(News $news) {
+        if ($news->user_id !== auth()->user()->id) {
+            return back();
+        }
     }
 }

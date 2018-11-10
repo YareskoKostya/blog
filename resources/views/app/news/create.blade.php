@@ -2,13 +2,13 @@
 
 @section('content')
     @php
-    $route = route('app.news.store');
-    $method = 'post';
+        $route = route('app.news.store');
+        $method = 'post';
 
-    if (isset($news)) {
-        $route = route('app.news.update', $news);
-        $method = 'patch';
-    }
+        if (isset($news)) {
+            $route = route('app.news.update', $news);
+            $method = 'patch';
+        }
     @endphp
 
     <form action="{{ $route }}" method="post">
@@ -53,20 +53,20 @@
         </div>
 
         @if ($tags->count())
-        <div class="form-group">
-            @foreach($tags as $tag)
-                <label class="mr-3">
-                    <input type="checkbox" name="tags[]" value="{{ $tag->getKey() }}"
-                           @isset($news)
-                               @foreach($news->tags as $tag_id)
-                                   @if($tag->getKey() == $tag_id->pivot->tag_id) checked @endif
-                               @endforeach
-                           @endisset
-                    >
-                    {{ $tag->title }}
-                </label>
-            @endforeach
-        </div>
+            <div class="form-group">
+                @foreach($tags as $tag)
+                    <label class="mr-3">
+                        <input type="checkbox" name="tags[]" value="{{ $tag->getKey() }}"
+                               @isset($news)
+                                   @foreach($news->tags as $tag_id)
+                                       @if($tag->getKey() == $tag_id->pivot->tag_id) checked @endif
+                                   @endforeach
+                               @endisset
+                        >
+                        {{ $tag->title }}
+                    </label>
+                @endforeach
+            </div>
         @endif
 
         <div class="mt-4">

@@ -19,7 +19,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'avatar',
     ];
 
     /**
@@ -35,6 +36,17 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function getUserAvatarAttribute()
+    {
+        $avatar = 'images/no-avatar-300x300.png';
+
+        if ($this->avatar) {
+            $avatar = $this->avatar;
+        }
+
+        return asset($avatar);
     }
 
     public function hasRole($needle)

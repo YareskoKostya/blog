@@ -12,7 +12,17 @@ Route::group([
         ]);
     })->name('home');
 
+    Route::group([
+        'as' => 'profile.',
+        'prefix' => 'profile',
+        'middleware' => ['auth']
+    ], function () {
+        Route::get('/', 'ProfileController@index')->name('index');
+        Route::patch('update', 'ProfileController@update')->name('update');
+    });
+
     Route::resource('news', 'NewsController');
+    Route::post('news/{news}/comment', 'NewsController@addComment')->name('news.add-comment');
     Route::resource('reviews', 'ReviewsController');
     Route::resource('posts', 'PostsController');
     Route::resource('categories', 'CategoriesController');

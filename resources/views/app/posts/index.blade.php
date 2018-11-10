@@ -27,6 +27,8 @@
         @endforelse
     </div>
 
+    {{ $posts->appends(request()->except('page'))->links() }}
+
     @auth
         <div class="col">
             <a href="{{ route('app.posts.create') }}"

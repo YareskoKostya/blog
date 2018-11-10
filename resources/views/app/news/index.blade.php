@@ -29,6 +29,8 @@
 
     </div>
 
+    {{ $newslist->appends(request()->except('page'))->links() }}
+
     @auth
         <div class="col">
             <a href="{{ route('app.news.create') }}"

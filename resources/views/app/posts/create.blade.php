@@ -58,10 +58,10 @@
                     <label class="mr-3">
                         <input type="checkbox" name="tags[]" value="{{ $tag->getKey() }}"
                                @isset($post)
-                               @foreach($post->tags as $tag_id)
-                               @if($tag->getKey() == $tag_id->pivot->tag_id) checked @endif
-                                @endforeach
-                                @endisset
+                                   @foreach($post->tags as $tag_id)
+                                       @if($tag->getKey() == $tag_id->pivot->tag_id) checked @endif
+                                   @endforeach
+                               @endisset
                         >
                         {{ $tag->title }}
                     </label>

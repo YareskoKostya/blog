@@ -2,16 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\Commentable;
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
+    use Commentable;
+
     protected $fillable = [
         'title',
         'description',
         'body',
         'user_id',
         'category_id',
+    ];
+
+    protected $appends = [
+        'comments_count'
     ];
 
     public function user()
