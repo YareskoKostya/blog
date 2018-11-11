@@ -131,7 +131,7 @@ class NewsController extends Controller
 
         $comment = $news->comments()->create($validated);
 
-        if (auth()->user()->id === $request->user_id) {
+        if ((string)auth()->user()->id === $request->user_id) {
             $comment->update(['approved' => 1]);
         }
 

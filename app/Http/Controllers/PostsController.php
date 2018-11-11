@@ -130,7 +130,7 @@ class PostsController extends Controller
 
         $comment = $post->comments()->create($validated);
 
-        if (auth()->user()->id === $request->user_id) {
+        if ((string)auth()->user()->id === $request->user_id) {
             $comment->update(['approved' => 1]);
         }
 

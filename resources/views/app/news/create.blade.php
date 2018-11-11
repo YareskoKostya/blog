@@ -11,7 +11,7 @@
         }
     @endphp
 
-    <form action="{{ $route }}" method="post">
+    <form action="{{ $route }}" method="post" enctype="multipart/form-data">
         @csrf
         @method($method)
 
@@ -35,6 +35,19 @@
                     </option>
                 @endforeach
             </select>
+        </div>
+
+        @isset($news)
+            @foreach ($news->media as $media)
+                <label for="media" class="form-group">
+                    <img src="{{ asset($media->path) }}" alt="">
+                </label>
+            @endforeach
+        @endisset
+
+        <div class="form-group">
+            <label>Изображение</label>
+            <input type="file" class="form-control" id="media" name="media">
         </div>
 
         <div class="form-group">
