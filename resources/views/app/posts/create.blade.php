@@ -37,11 +37,13 @@
             </select>
         </div>
 
-        @foreach ($post->media as $media)
-            <label for="media" class="form-group">
-                <img src="{{ asset($media->path) }}" alt="">
-            </label>
-        @endforeach
+        @isset($post)
+            @foreach ($post->media as $media)
+                <label for="media" class="form-group">
+                    <img src="{{ asset($media->path) }}" alt="">
+                </label>
+            @endforeach
+        @endisset
 
         <div class="form-group">
             <label>Изображение</label>

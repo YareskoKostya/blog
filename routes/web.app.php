@@ -6,9 +6,9 @@ Route::group([
 
     Route::get('/', function () {
         return view('app.home.index', [
-            'newslist' => App\Models\News::take(6)->get(),
-            'reviews' => App\Models\Review::take(4)->get(),
-            'posts' => App\Models\Post::take(8)->get()
+            'newslist' => App\Models\News::take(5)->get(),
+            'reviews' => App\Models\Review::take(5)->get(),
+            'posts' => App\Models\Post::take(5)->get()
         ]);
     })->name('home');
 

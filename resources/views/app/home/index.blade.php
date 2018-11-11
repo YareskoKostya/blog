@@ -4,8 +4,8 @@
 
     <div class="col pb-4">
         <h3>Новости</h3>
-        @forelse($newslist as $news)
-            <div class="row">
+        <div class="row">
+            @forelse($newslist as $news)
                 <div class="jumbotron mr-4">
                     <h2>
                         <a href="{{ route('app.news.show', $news->getKey()) }}">
@@ -21,18 +21,18 @@
 
                     <p class="mb-0 my-4">{{ $news->created_at->diffForHumans() }}</p>
                 </div>
-            </div>
-        @empty
-            <div class="col">
-                <p>Новости пока не добавлены.</p>
-            </div>
-        @endforelse
+            @empty
+                <div class="col">
+                    <p>Новости пока не добавлены.</p>
+                </div>
+            @endforelse
+        </div>
     </div>
 
     <div class="col pb-4">
         <h3>Посты</h3>
-        @forelse($posts as $post)
-            <div class="row">
+        <div class="row">
+            @forelse($posts as $post)
                 <div class="jumbotron mr-4">
                     <h2>
                         <a href="{{ route('app.posts.show', $post->getKey()) }}">
@@ -48,18 +48,18 @@
 
                     <p class="mb-0 my-4">{{ $post->created_at->diffForHumans() }}</p>
                 </div>
-            </div>
-        @empty
-            <div class="col">
-                <p>Постов пока нет.</p>
-            </div>
-        @endforelse
+            @empty
+                <div class="col">
+                    <p>Постов пока нет.</p>
+                </div>
+            @endforelse
+        </div>
     </div>
 
     <div class="col">
         <h3>Обзоры</h3>
-        @forelse($reviews as $review)
-            <div class="row">
+        <div class="row">
+            @forelse($reviews as $review)
                 <div class="jumbotron mr-4">
                     <h2>
                         <a href="{{ route('app.reviews.show', $review->getKey()) }}">
@@ -75,11 +75,11 @@
 
                     <p class="mb-0 my-4">{{ $review->created_at->diffForHumans() }}</p>
                 </div>
-            </div>
-        @empty
-            <div class="col">
-                <p>Обзоров пока нет.</p>
-            </div>
-        @endforelse
+            @empty
+                <div class="col">
+                    <p>Обзоров пока нет.</p>
+                </div>
+            @endforelse
+        </div>
     </div>
 @endsection

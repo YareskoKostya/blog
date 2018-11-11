@@ -33,7 +33,7 @@ class PostsController extends Controller
         }
 
         return view('app.posts.index', [
-            'posts' => $posts->paginate(10),
+            'posts' => $posts->paginate(5),
         ]);
     }
 
@@ -113,6 +113,10 @@ class PostsController extends Controller
     {
         $this->checkUser($post);
         $post->tags()->detach(request('tags'));
+        foreach ($post->media as $media){
+            Storage::delete(str_replace('media/', '', $media->path));
+        }
+        $post->media()->delete();
         $post->delete();
         return redirect()->route('app.posts.index');
     }

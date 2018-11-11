@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -32,7 +33,7 @@ class NewsController extends Controller
         }
 
         return view('app.news.index', [
-            'newslist' => $newslist->paginate(3),
+            'newslist' => $newslist->paginate(5),
         ]);
     }
 
@@ -54,6 +55,16 @@ class NewsController extends Controller
         $news = News::create(request()->all());
 
         $news->tags()->attach(request('tags'));
+
+        if (request()->hasFile('media')) {
+            $media = request()->file('media');
+            $news->media()->create([
+                'path' => 'media/' . $media->store('news'),
+                'collection' => 'news',
+                'size' => $media->getClientSize(),
+                'extension' => $media->getClientOriginalExtension(),
+            ]);
+        }
 
         return redirect()->route('app.news.show', $news);
     }
@@ -81,6 +92,20 @@ class NewsController extends Controller
 
         $news->fill(request()->all());
         $news->tags()->sync(request('tags'));
+
+        if (request()->hasFile('media')) {
+            foreach ($news->media as $media){
+                Storage::delete(str_replace('media/', '', $media->path));
+            }
+            $media = request()->file('media');
+            $news->media()->update([
+                'path' => 'media/' . $media->store('posts'),
+                'collection' => 'posts',
+                'size' => $media->getClientSize(),
+                'extension' => $media->getClientOriginalExtension(),
+            ]);
+        }
+
         $news->update();
         return redirect(route('app.news.index'));
     }
@@ -89,6 +114,10 @@ class NewsController extends Controller
     {
         $this->checkUser($news);
         $news->tags()->detach(request('tags'));
+        foreach ($news->media as $media){
+            Storage::delete(str_replace('media/', '', $media->path));
+        }
+        $news->media()->delete();
         $news->delete();
         return redirect()->route('app.news.index');
     }
