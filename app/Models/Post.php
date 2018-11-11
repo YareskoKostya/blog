@@ -2,16 +2,25 @@
 
 namespace App\Models;
 
+use App\Traits\Commentable;
+use App\Traits\Mediable;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use Commentable;
+    use Mediable;
+
     protected $fillable = [
         'title',
         'description',
         'body',
         'category_id',
         'user_id'
+    ];
+
+    protected $appends = [
+        'comments_count'
     ];
 
     public function user()

@@ -81,7 +81,7 @@ class NewsController extends Controller
 
         $news->fill(request()->all());
         $news->tags()->sync(request('tags'));
-        $news->save();
+        $news->update();
         return redirect(route('app.news.index'));
     }
 

@@ -10,6 +10,12 @@
         </div>
     </div>
 
+    @foreach ($post->media as $media)
+        <label for="media" class="form-group">
+            <img src="{{ asset($media->path) }}" alt="">
+        </label>
+    @endforeach
+
     @if ($post->description)
         <p class="lead">{{ $post->description }}</p>
     @endif

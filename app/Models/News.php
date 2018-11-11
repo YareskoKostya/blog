@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Commentable;
+use App\Traits\Mediable;
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
     use Commentable;
+    use Mediable;
 
     protected $fillable = [
         'title',

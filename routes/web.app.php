@@ -24,7 +24,9 @@ Route::group([
     Route::resource('news', 'NewsController');
     Route::post('news/{news}/comment', 'NewsController@addComment')->name('news.add-comment');
     Route::resource('reviews', 'ReviewsController');
+    Route::post('reviews/{review}/comment', 'ReviewController@addComment')->name('reviews.add-comment');
     Route::resource('posts', 'PostsController');
+    Route::post('posts/{post}/comment', 'PostController@addComment')->name('posts.add-comment');
     Route::resource('categories', 'CategoriesController');
     Route::resource('tags', 'TagsController');
 });

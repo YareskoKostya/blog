@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -55,6 +56,15 @@ class PostsController extends Controller
 
         $post->tags()->attach(request('tags'));
 
+        if (request()->hasFile('media')) {
+            $media = request()->file('media');
+            $post->media()->create([
+                'path' => 'media/' . $media->store('posts'),
+                'collection' => 'posts',
+                'size' => $media->getClientSize(),
+                'extension' => $media->getClientOriginalExtension(),
+            ]);
+        }
         return redirect()->route('app.posts.show', $post);
     }
 
@@ -81,7 +91,21 @@ class PostsController extends Controller
 
         $post->fill(request()->all());
         $post->tags()->sync(request('tags'));
-        $post->save();
+
+        if (request()->hasFile('media')) {
+            foreach ($post->media as $media){
+                Storage::delete(str_replace('media/', '', $media->path));
+            }
+            $media = request()->file('media');
+            $post->media()->update([
+                'path' => 'media/' . $media->store('posts'),
+                'collection' => 'posts',
+                'size' => $media->getClientSize(),
+                'extension' => $media->getClientOriginalExtension(),
+            ]);
+        }
+
+        $post->update();
         return redirect(route('app.posts.index'));
     }
 
