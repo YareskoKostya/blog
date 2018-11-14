@@ -34,8 +34,8 @@
                 </div>
             @endforelse
         </div>
+        {{ $newslist->links() }}
     </div>
-    {{ $newslist->links() }}
 
     <div class="col pb-4">
         <h3>Посты</h3>
