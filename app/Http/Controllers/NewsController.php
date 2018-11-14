@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\NewsResource;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;

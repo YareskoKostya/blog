@@ -70,12 +70,7 @@
                 @foreach($tags as $tag)
                     <label class="mr-3">
                         <input type="checkbox" name="tags[]" value="{{ $tag->getKey() }}"
-                               @isset($news)
-                                   @foreach($news->tags as $tag_id)
-                                       @if($tag->getKey() == $tag_id->pivot->tag_id) checked @endif
-                                   @endforeach
-                               @endisset
-                        >
+                               @if (isset($news) && $news->tags->pluck('id')->contains($tag->getKey())) checked @endif>
                         {{ $tag->title }}
                     </label>
                 @endforeach
