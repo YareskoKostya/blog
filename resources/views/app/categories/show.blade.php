@@ -9,8 +9,10 @@
     <div class="col pb-4">
         <h3>Новости</h3>
         <div class="row">
+            @php($x = 0)
             @forelse($newslist as $news)
                 @if($news->category->title == $category->title)
+                    @php($x++)
                     <div class="jumbotron mr-4">
                         <h2>
                             <a href="{{ route('app.news.show', $news->getKey()) }}">
@@ -29,19 +31,27 @@
                     </div>
                 @endif
             @empty
-                <div class="col">
-                    <p>Новостей данной категории нет.</p>
+                <div class="row">
+                    <p>Новостей нет.</p>
                 </div>
             @endforelse
         </div>
-        {{ $newslist->links() }}
+        @if(!$x)
+            <div class="row">
+                <p>Новостей данной категории нет.</p>
+            </div>
+        @elseif($x > 5)
+            {{ $newslist->links() }}
+        @endif
     </div>
 
     <div class="col pb-4">
         <h3>Посты</h3>
         <div class="row">
+            @php($y = 0)
             @forelse($posts as $post)
                 @if($post->category->title == $category->title)
+                    @php($y++)
                     <div class="jumbotron mr-4">
                         <h2>
                             <a href="{{ route('app.posts.show', $post->getKey()) }}">
@@ -59,12 +69,18 @@
                     </div>
                 @endif
             @empty
-                <div class="col">
-                    <p>Постов данной категории нет.</p>
+                <div class="row">
+                    <p>Постов нет.</p>
                 </div>
             @endforelse
         </div>
-        {{ $posts->links() }}
+        @if(!$y)
+            <div class="row">
+                <p>Постов данной категории нет.</p>
+            </div>
+        @elseif($y > 5)
+            {{ $posts->links() }}
+        @endif
     </div>
 
 @endsection
